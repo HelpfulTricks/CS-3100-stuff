@@ -12,9 +12,11 @@ class HTDictionary:
         #size will dictate how many actual objects are in the array, will be updated whenever we insert or pop an item from the array
         self._size = len(arr)
 
+    #provided as part of the assignment
     def _hash_function(self, key):
         return key % self._max_size
-
+    
+    #provided as part of the assignment
     def __len__(self):
         return self._size
     
@@ -30,6 +32,7 @@ class HTDictionary:
                     return [i, k]
         return -1
 
+    #provided as part of the assignment
     def __contains__(self, key):
         results = self._find(key)
         if results == -1:
@@ -46,6 +49,7 @@ class HTDictionary:
         #if it does exist, we return the item we're looking for. it looks a bit odd, but since each key-value pair is in an arrays of arrays, this is how we have to do it.
         return self._hash_table[item[0]][item[1]]
 
+    #provided as part of the assignment
     def __setitem__(self, key, value):
         self._insert(key,value)
 
@@ -73,6 +77,7 @@ class HTDictionary:
             self._hash_table[item[0]].pop(item[1])
             self._size -= 1
 
+    #provided as part of the assignment
     def __str__(self):
         results = ""
         for entry in self._hash_table:
