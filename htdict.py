@@ -3,7 +3,7 @@ class HTDictionary:
     #written by madi
     def __init__(self, arr, size):
         #sets the size of our hash table
-        self._max_size = 20
+        self._max_size = size
         #creates an array of a number of arrays equal to our max size, which is 20
         self._hash_table = [[] for _ in range(0, self._max_size)]
         #for each item in the input array, we run the key (i[0]) through the hash function, which assigns it to a certain slot in the hash table depending on its key value
@@ -15,21 +15,21 @@ class HTDictionary:
     #provided as part of the assignment
     def _hash_function(self, key):
         return key % self._max_size
-    
+
     #provided as part of the assignment
     def __len__(self):
         return self._size
-    
+
     #written by madi
     def _find(self, key):
-        #since we are operating on basically 3 layers of arrays, we have to do 2 for statements here. one is for each slot in the array table
-        for i, j in enumerate(self._hash_table):
-            #and this one is for each array in each slot
-            for k, l in enumerate(j):
-                #l is the variable that actually contains each key-value pair, so l[0] is the key we're looking for
-                if l[0] == key:
-                    #this is an array containing the hash table slot and position in the slot of the key-value pair we're looking for
-                    return [i, k]
+        #we find which entry in the hash table it'd be in using the hash function, and loop through each item in that entry
+        for i, j in enumerate(self._hash_table[self._hash_function(key)-1]):
+            #we're looking for the key here
+            if j[0] == key:
+                #if we find it, we return an array containing the array we're looking in, and the entry in that array
+                return [self._hash_function(key)-1, i]
+        #if we never found it, we simply return -1.
+        #we don't have to worry about this accidentally activating, as this only comes up if we haven't returned yet, which is what we want.
         return -1
 
     #provided as part of the assignment
@@ -88,7 +88,7 @@ class HTDictionary:
         results += "Length: " + str(self._size)
         return results
 
-#this testing code was all provided as part of the assignment
+#all code below is testing code that was provided as part of the assignment
 def main():
     arr = [[1,"John"],[3,"Jack"],[2, "Ann"], [21, "Amy"]]
     d = HTDictionary(arr, 20)
